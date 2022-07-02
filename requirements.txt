@@ -1,3 +1,6 @@
 numpy
 timezonefinder[numba]
 Flask
+cryptography
+pyopenssl
+gunicorn
