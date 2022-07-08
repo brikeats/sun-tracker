@@ -1,0 +1,46 @@
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1"
+    />
+    <title>AR Sun Tracker</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "4ej86bp5e0");
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="vid_container">
+        <video id="video" autoplay playsinline></video>
+        <div id="video_overlay"></div>
+      </div>
+      <div id="gui_controls">
+        <button
+          id="switchCameraButton"
+          name="switch Camera"
+          type="button"
+          aria-pressed="false"
+        ></button>
+        <button id="takePhotoButton" name="take Photo" type="button"></button>
+        <button
+          id="toggleFullScreenButton"
+          name="toggle FullScreen"
+          type="button"
+          aria-pressed="true"
+        ></button>
+      </div>
+    </div>
+    <script src="static/js/adapter.min.js"></script>
+    <script src="static/js/screenfull.min.js"></script>
+    <script src="static/js/howler.core.min.js"></script>
+    <script src="static/js/main.js"></script>
+  </body>
+</html>
