@@ -1,22 +1,13 @@
-/*
-
->> kasperkamperman.com - 2018-04-18
->> kasperkamperman.com - 2020-05-17
->> https://www.kasperkamperman.com/blog/camera-template/
-
-*/
 
 var takeSnapshotUI = createClickFeedbackUI();
 
 var video;
-var takePhotoButton;
 var toggleFullScreenButton;
 var switchCameraButton;
-var amountOfCameras = 0;
-var currentFacingMode = 'environment';
+var numberOfCameras = 0;
 
-// this function counts the amount of video inputs
-// it replaces DetectRTC that was previously implemented.
+
+// count the number of video inputs
 function deviceCount() {
   return new Promise(function (resolve) {
     var videoInCount = 0;
@@ -44,6 +35,7 @@ function deviceCount() {
   });
 }
 
+
 document.addEventListener('DOMContentLoaded', function (event) {
   // check if mediaDevices is supported
   console.log('navigator.mediaDevices', navigator.mediaDevices);
@@ -68,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
         });
 
         deviceCount().then(function (deviceCount) {
-          amountOfCameras = deviceCount;
+          numberOfCameras = deviceCount;
 
           // init the UI and the camera stream
           initCameraUI();
@@ -90,20 +82,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
   }
 });
 
+
 function initCameraUI() {
   video = document.getElementById('video');
 
-  takePhotoButton = document.getElementById('takePhotoButton');
   toggleFullScreenButton = document.getElementById('toggleFullScreenButton');
-  switchCameraButton = document.getElementById('switchCameraButton');
 
   // https://developer.mozilla.org/nl/docs/Web/HTML/Element/button
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role
 
-  takePhotoButton.addEventListener('click', function () {
-    takeSnapshotUI();
-    takeSnapshot();
-  });
 
   // -- fullscreen part
 
@@ -133,18 +120,6 @@ function initCameraUI() {
     });
   } else {
     console.log("iOS doesn't support fullscreen (yet)");
-  }
-
-  // -- switch camera part
-  if (amountOfCameras > 1) {
-    switchCameraButton.style.display = 'block';
-
-    switchCameraButton.addEventListener('click', function () {
-      if (currentFacingMode === 'environment') currentFacingMode = 'user';
-      else currentFacingMode = 'environment';
-
-      initCameraStream();
-    });
   }
 
   // Listen for orientation changes to make sure buttons stay at the side of the
@@ -200,7 +175,7 @@ function initCameraStream() {
       height: { ideal: size },
       //width: { min: 1024, ideal: window.innerWidth, max: 1920 },
       //height: { min: 776, ideal: window.innerHeight, max: 1080 },
-      facingMode: currentFacingMode,
+      facingMode: 'environment',
     },
   };
 
@@ -231,6 +206,7 @@ function initCameraStream() {
     console.error('getUserMedia() error: ', error);
   }
 }
+
 
 function takeSnapshot() {
   // if you'd like to show the canvas add it to the DOM
@@ -263,6 +239,7 @@ function takeSnapshot() {
   });
 }
 
+
 // https://hackernoon.com/how-to-use-javascript-closures-with-confidence-85cd1f841a6b
 // closure; store this in a variable and call the variable as function
 // eg. var takeSnapshotUI = createClickFeedbackUI();
@@ -293,3 +270,13 @@ function createClickFeedbackUI() {
     }
   };
 }
+
+
+function handleOrientation(event) {
+  var alpha = event.alpha;  // In degree in the range [-180,180)
+  var beta = event.beta;  // In degree in the range [-180,180)
+  var gamma = event.gamma; // In degree in the range [-90,90)
+
+}
+
+window.addEventListener('deviceorientation', handleOrientation);
